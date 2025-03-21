@@ -117,30 +117,6 @@ def perform_action(action, token, amount):
     print(f"{action.capitalize()} transaction confirmed: {receipt.status}")
     return receipt, tx_hash.hex()
 
-# # Main execution
-# if __name__ == "__main__":
-#     action = input("Enter action (borrow, lend, repay): ").strip().lower()
-#     token = input("Enter token (usdc, usdt, dai): ").strip().lower()
-#     amount = int(input("Enter amount (in smallest unit, e.g., wei): "))
-
-#     if token not in TOKEN_ADDRESSES:
-#         raise ValueError("Invalid token. Please choose 'usdc', 'usdt', or 'dai'.")
-
-#     print(f"Approving {token.upper()} spend...")
-#     approve_receipt = approve_token_spend(token, amount)
-
-#     print("Waiting for approval to be processed...")
-#     time.sleep(5)
-
-#     print(f"Performing {action} action with {amount} {token.upper()}...")
-#     action_receipt = perform_action(action, token, amount)
-
-#     print("===== Transaction Summary =====")
-#     print(f"Action: {action.capitalize()}")
-#     print(f"Token: {token.upper()}")
-#     print(f"Amount: {amount}")
-#     print("==============================")
-#     print(f"{action.capitalize()} process completed!")
 
 #_____________________________________________________________________________________________________________________
 # AGENT DEFINITION
@@ -159,26 +135,21 @@ from alith import Agent
 
 
 
-def borrow(amount: int, token: str) -> str:
-    """borrow token """
-    action = "borrow"
-    token = token
-    amount = amount
-
+def _execute_token_action(action: str, amount: int, token: str) -> str:
+    """Helper function to execute token actions (borrow/lend/repay)"""
     if token not in TOKEN_ADDRESSES:
         return "Invalid token. Please choose 'usdc', 'usdt', or 'dai'."
 
     print(f"Approving {token.upper()} spend...")
-    approve_receipt = approve_token_spend(token, amount)
+    approve_token_spend(token, amount)
 
     print("Waiting for approval to be processed...")
     time.sleep(5)
 
     print(f"Performing {action} action with {amount} {token.upper()}...")
-    action_receipt, tx = perform_action(action, token, amount)
+    _, tx = perform_action(action, token, amount)
 
-    # Return transaction summary as a string
-    transaction_summary = (
+    return (
         "===== Transaction Summary =====\n"
         f"Action: {action.capitalize()}\n"
         f"Token: {token.upper()}\n"
@@ -187,67 +158,18 @@ def borrow(amount: int, token: str) -> str:
         f"{action.capitalize()} process completed!\n"
         f"Transaction Receipt: https://andromeda-explorer.metis.io/tx/{tx}"
     )
-    return transaction_summary
+
+def borrow(amount: int, token: str) -> str:
+    """borrow token"""
+    return _execute_token_action("borrow", amount, token)
 
 def lend(amount: int, token: str) -> str:
-    """lend token """
-    action = "lend"
-    token = token
-    amount = amount
-
-    if token not in TOKEN_ADDRESSES:
-        return "Invalid token. Please choose 'usdc', 'usdt', or 'dai'."
-
-    print(f"Approving {token.upper()} spend...")
-    approve_receipt = approve_token_spend(token, amount)
-
-    print("Waiting for approval to be processed...")
-    time.sleep(5)
-
-    print(f"Performing {action} action with {amount} {token.upper()}...")
-    action_receipt, tx = perform_action(action, token, amount)
-
-    # Return transaction summary as a string
-    transaction_summary = (
-        "===== Transaction Summary =====\n"
-        f"Action: {action.capitalize()}\n"
-        f"Token: {token.upper()}\n"
-        f"Amount: {amount}\n"
-        "==============================\n"
-        f"{action.capitalize()} process completed!\n"
-        f"Transaction Receipt: https://andromeda-explorer.metis.io/tx/{tx}"
-    )
-    return transaction_summary
+    """lend token"""
+    return _execute_token_action("lend", amount, token)
 
 def repay(amount: int, token: str) -> str:
-    """repay token """
-    action = "repay"
-    token = token
-    amount = amount
-
-    if token not in TOKEN_ADDRESSES:
-        return "Invalid token. Please choose 'usdc', 'usdt', or 'dai'."
-
-    print(f"Approving {token.upper()} spend...")
-    approve_receipt = approve_token_spend(token, amount)
-
-    print("Waiting for approval to be processed...")
-    time.sleep(5)
-
-    print(f"Performing {action} action with {amount} {token.upper()}...")
-    action_receipt, tx = perform_action(action, token, amount)
-
-    # Return transaction summary as a string
-    transaction_summary = (
-        "===== Transaction Summary =====\n"
-        f"Action: {action.capitalize()}\n"
-        f"Token: {token.upper()}\n"
-        f"Amount: {amount}\n"
-        "==============================\n"
-        f"{action.capitalize()} process completed!\n"
-        f"Transaction Receipt: https://andromeda-explorer.metis.io/tx/{tx}"
-    )
-    return transaction_summary
+    """repay token"""
+    return _execute_token_action("repay", amount, token)
 
 # Initialize Alith Agent
 agent = Agent(
