@@ -1,4 +1,5 @@
 # DEFI_Agent Documentation
+![image](https://github.com/user-attachments/assets/21a4d8ff-6bd3-456a-81cd-1a2a463b6e66)
 
 ## Business Logic
 
