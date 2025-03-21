@@ -156,7 +156,7 @@ def _execute_token_action(action: str, amount: int, token: str) -> str:
         f"Amount: {amount}\n"
         "==============================\n"
         f"{action.capitalize()} process completed!\n"
-        f"Transaction Receipt: https://andromeda-explorer.metis.io/tx/{tx}"
+        f"Transaction Receipt: https://andromeda-explorer.metis.io/tx/0x{tx}"
     )
 
 def borrow(amount: int, token: str) -> str:
