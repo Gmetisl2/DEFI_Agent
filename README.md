@@ -4,7 +4,9 @@
 ## Business Logic
 
 The `DEFI_Agent` script is designed to streamline decentralized finance (DeFi) operations on the Aave V3 protocol deployed on the Metis Layer 2 blockchain. It provides an automated interface for lending, borrowing, and repaying tokens via a Telegram bot. The script integrates with the Aave protocol and uses the Alith framework to enable seamless interaction with users.
+
 **THIS PROJECT IS BARELY A POC NOT A FINAL PRODUCT**
+The current features are only showcasing the possibilities and expanded by contributors "
 
 
 ### Key Features:
